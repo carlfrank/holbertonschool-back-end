@@ -1,44 +1,35 @@
 #!/usr/bin/python3
 """
-    data gathering from api module
+This script uses the JSONPlaceholder API to fetch
+data about a specific employee
+and prints a summary of their TODO list progress.
 """
+
 import requests
 import sys
 
-# python3 0-gather_data_from_an_API.py 2 is the run command where two is the id
-employee_id = sys.argv[1]
 
-# uses request import to get the data from the api
-user_response = requests.get(
-    'https://jsonplaceholder.typicode.com/users/' + employee_id)
+def print_todo_progress(employee_id):
+    user_url = ('https://jsonplaceholder.typicode.com/users/{}'
+                .format(employee_id))
+    user_response = requests.get(user_url)
+    employee_name = user_response.json()['name']
 
-# converts the data to json format
-data = user_response.json()
+    todos_url = ('https://jsonplaceholder.typicode.com/todos?userId={}'
+                 .format(employee_id))
+    todos_response = requests.get(todos_url)
+    todos_data = todos_response.json()
 
-# gets the name of the employee
-employee_name = data['name']
+    total_tasks = len(todos_data)
+    done_tasks = sum(1 for task in todos_data if task['completed'])
 
-# gets the tasks of the employee
-todo_response = requests.get(
-    'https://jsonplaceholder.typicode.com/todos?userId=' + employee_id)
+    print('Employee {} is done with tasks({}/{}):'
+          .format(employee_name, done_tasks, total_tasks))
+    for task in todos_data:
+        if task['completed']:
+            print('\t {}'.format(task['title']))
 
-# converts the tasks data to json format
-todo_data = todo_response.json()
 
-# gets the total number of tasks
-todo_total = str(len(todo_data))
-
-# gets the number of completed tasks
-todo_completed = str(sum(1 for task in todo_data if task['completed']))
-
-# prints the data in the format required
-print('Employee {} is done with tasks({}/{}):'.format(employee_name,
-      todo_completed, todo_total))
-
-# prints the completed tasks by title of task
-for task in todo_data:
-    if task['completed']:
-        print('\t {}'.format(task['title']))
-
-if __name__ == '__main__':
-    pass
+if __name__ == "__main__":
+    employee_id = sys.argv[1]
+    print_todo_progress(employee_id)
