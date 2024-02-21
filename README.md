@@ -66,5 +66,3 @@ Distributed under the MIT License. See LICENSE for more information.
 
 
 Project Link: https://github.com/carlfrank/holbertonschool-back-end
-
-Please adjust the placeholders (e.g., `[Insert Your Contact Information]`, versions, and specific technologies) with the actual data relevant to your project. This will ensure that the README is accurate and provides all necessary information for users to get started with your API.
