@@ -64,8 +64,6 @@ Open a pull request
 License
 Distributed under the MIT License. See LICENSE for more information.
 
-Contact
-Your Name - [Insert Your Contact Information]
 
 Project Link: https://github.com/carlfrank/holbertonschool-back-end
 
